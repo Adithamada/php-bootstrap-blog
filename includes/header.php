@@ -1,6 +1,7 @@
 <?php 
+require_once __DIR__ . '/../config/db.php'; // memuat BASE_PATH, koneksi DB, dll
+require_once BASE_PATH . '/config/function.php';
 
-include "../../config/function.php";
 
 ?>
 

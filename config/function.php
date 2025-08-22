@@ -1,6 +1,7 @@
 <?php
 require_once 'db.php';
-session_start();
+
+//AUTH
 
 function generateUniqueUsername($name)
 {
@@ -62,3 +63,17 @@ function registerUser($name, $email, $password)
     }
 }
 
+function loginUser($username, $password){
+    global $conn;
+    $stmt = $conn->prepare("SELECT * FROM users WHERE username=?");
+    $stmt->bind_param("s",$username);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if($result->num_rows === 1){
+        $user = $result->fetch_assoc();
+        if(password_verify($password,$user['password']));
+        return $user;
+    }
+    return false;
+}
+// AUTH

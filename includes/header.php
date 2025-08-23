@@ -1,8 +1,7 @@
 <?php 
 require_once __DIR__ . '/../config/db.php'; // memuat BASE_PATH, koneksi DB, dll
-require_once BASE_PATH . '/config/function.php';
-
-
+require_once BASE_PATH . '/config/validationFunction.php';
+require_once BASE_PATH . '/config/authFunction.php';
 ?>
 
 <!DOCTYPE html>

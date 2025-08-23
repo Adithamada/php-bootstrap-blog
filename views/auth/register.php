@@ -2,20 +2,36 @@
 require_once __DIR__ . '/../../config/db.php';
 require_once BASE_PATH . '/includes/header.php';
 
-if(isset($_POST['register'])){
+$errors = [];
+
+if (isset($_POST['register'])) {
     $name = $_POST['name'];
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    if (registerUser($name, $email, $password)) {
-        header("Location: login.php");
-        exit;
-    }
+    $errors = validateRegisterInput($name, $email, $password);
 
+    if (empty($errors)) {
+        if (registerUser($name, $email, $password)) {
+            header("Location: login.php");
+            exit;
+        }
+    }
 }
 
 ?>
 
+<?php if (!empty($errors)): ?>
+    <div class="container d-flex justify-content-center mt-4">
+        <div class="alert alert-danger w-25">
+            <ul>
+                <?php foreach ($errors as $error): ?>
+                    <li><?php echo htmlspecialchars($error); ?></li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+    </div>
+<?php endif; ?>
 <div class="d-flex justify-content-center align-items-center w-100 mt-5">
     <div class="card shadow-sm" style="width: 400px;">
         <div class="card-header text-center">
@@ -26,19 +42,19 @@ if(isset($_POST['register'])){
 
                 <div class="mb-3">
                     <label for="name" class="form-label">Full Name</label>
-                    <input type="text" class="form-control" id="name" name="name" required>
+                    <input type="text" class="form-control" id="name" name="name">
                     <div class="invalid-feedback">Name is required.</div>
                 </div>
 
                 <div class="mb-3">
                     <label for="email" class="form-label">Email address</label>
-                    <input type="email" class="form-control" id="email" name="email" required>
+                    <input type="text" class="form-control" id="email" name="email">
                     <div class="invalid-feedback">Valid email is required.</div>
                 </div>
 
                 <div class="mb-3">
                     <label for="password" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="password" name="password" required minlength="8">
+                    <input type="password" class="form-control" id="password" name="password">
                     <div class="invalid-feedback">Password must be at least 8 characters.</div>
                 </div>
 

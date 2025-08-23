@@ -44,8 +44,10 @@ function registerUser($name, $email, $password)
     $checkEmail->execute();
     $resultEmail = $checkEmail->get_result();
     if ($resultEmail->num_rows > 0) {
-        $_SESSION['error'] = "Email sudah digunakan.";
-        return false;
+        return [
+            'status' => false,
+            'error' => "Email already use.",
+        ];
     }
 
     $username = generateUniqueUsername($name);
@@ -53,25 +55,28 @@ function registerUser($name, $email, $password)
 
     $stmt = $conn->prepare("INSERT INTO users (name, username, email, password, created_at) VALUES (?,?,?,?, NOW())");
     $stmt->bind_param("ssss", $name, $username, $email, $hashedPassword);
-    
-    if($stmt->execute()){
-        $_SESSION['success']="Registration success.";
-        return true;
+
+    if ($stmt->execute()) {
+        return ['status' => true];
     } else {
-        $_SESSION['error']="Registration failed.";
-        return false;
+        return
+            [
+                'status' => false,
+                'error'=> "Registration failed! Please try again."
+            ];
     }
 }
 
-function loginUser($username, $password){
+function loginUser($username, $password)
+{
     global $conn;
     $stmt = $conn->prepare("SELECT * FROM users WHERE username=?");
-    $stmt->bind_param("s",$username);
+    $stmt->bind_param("s", $username);
     $stmt->execute();
     $result = $stmt->get_result();
-    if($result->num_rows === 1){
+    if ($result->num_rows === 1) {
         $user = $result->fetch_assoc();
-        if(password_verify($password,$user['password']));
+        if (password_verify($password, $user['password']));
         return $user;
     }
     return false;

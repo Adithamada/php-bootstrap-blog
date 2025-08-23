@@ -15,10 +15,13 @@ if (isset($_POST['register'])) {
     $errors = validateRegisterInput($name, $email, $password);
 
     if (empty($errors)) {
-        if (registerUser($name, $email, $password)) {
+        $result = registerUser($name, $email, $password);
+        if ($result['status']) {
             $_SESSION['successRegister'] = "Register successful! Please login.";
             header("Location: login.php");
             exit;
+        }else{
+            $errors[] = $result['error'];
         }
     }
 }

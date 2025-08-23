@@ -4,7 +4,10 @@ function validateRegisterInput($name, $email, $password)
 {
     $errors = [];
 
-    //Nama
+    if(empty(trim($name)) && empty(trim($email)) && empty(trim($password))){
+        $errors[]="All field required!";
+        return $errors;
+    }
     if (empty(trim($name))) {
         $errors[] = "Name is required!";
     } elseif (strlen($name) < 3) {
@@ -12,7 +15,7 @@ function validateRegisterInput($name, $email, $password)
     }
 
     if (empty(trim($email))) {
-        $errors[] = "Name is required!";
+        $errors[] = "Email is required!";
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $errors[] = "Invalid email format!";
     }

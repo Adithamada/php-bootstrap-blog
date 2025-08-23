@@ -19,6 +19,14 @@ if(isset($_POST['login'])){
 
 ?>
 
+<?php if (isset($_SESSION['successRegister'])): ?>
+    <div class="container d-flex justify-content-center mt-4">
+        <div class="alert alert-success w-25"><p><?= htmlspecialchars($_SESSION['successRegister']); ?></p>
+        </div>
+        <?php unset($_SESSION['successRegister']); ?>
+    </div>
+<?php endif; ?>
+
 <div class="d-flex justify-content-center align-items-center w-100 mt-5">
     <div class="card shadow-sm" style="width: 400px;">
         <div class="card-header text-center">
@@ -43,7 +51,7 @@ if(isset($_POST['login'])){
             </form>
 
             <p class="text-center mt-3">
-                Wanna be a writer? <a href="login.php">Register here</a>
+                Wanna be a writer? <a href="register.php">Register here</a>
             </p>
 
         </div>

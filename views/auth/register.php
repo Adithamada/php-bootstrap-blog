@@ -1,8 +1,11 @@
 <?php
+session_start();
+
 require_once __DIR__ . '/../../config/db.php';
 require_once BASE_PATH . '/includes/header.php';
 
 $errors = [];
+
 
 if (isset($_POST['register'])) {
     $name = $_POST['name'];
@@ -13,6 +16,7 @@ if (isset($_POST['register'])) {
 
     if (empty($errors)) {
         if (registerUser($name, $email, $password)) {
+            $_SESSION['successRegister'] = "Register successful! Please login.";
             header("Location: login.php");
             exit;
         }

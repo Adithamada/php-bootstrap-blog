@@ -28,3 +28,26 @@ function validateRegisterInput($name, $email, $password)
 
     return $errors;
 }
+
+function validateLoginInput($username, $password){
+
+    $errors = [];
+
+    if(empty(trim($username)) && empty(trim($password))){
+        $errors[]="All field required!";
+        return $errors;
+    }
+
+    if (empty(trim($username))) {
+        $errors[] = "Username is required!";
+    } elseif (strlen($username) < 3) {
+        $errors[] = "Username must be at least 3 characters!";
+    }
+
+    if (empty(trim($password))) {
+        $errors[] = "Password is required!";
+    } elseif (strlen($password) < 8) {
+        $errors[] = "Password must be at least 8 characters!";
+    }
+    return $errors;
+}

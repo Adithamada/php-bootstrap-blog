@@ -62,7 +62,7 @@ function registerUser($name, $email, $password)
         return
             [
                 'status' => false,
-                'error'=> "Registration failed! Please try again."
+                'error' => "Registration failed! Please try again."
             ];
     }
 }
@@ -74,11 +74,25 @@ function loginUser($username, $password)
     $stmt->bind_param("s", $username);
     $stmt->execute();
     $result = $stmt->get_result();
+
     if ($result->num_rows === 1) {
         $user = $result->fetch_assoc();
-        if (password_verify($password, $user['password']));
-        return $user;
+        if (password_verify($password, $user['password'])) {
+            return [
+                'status' => true,
+                'user' => $user,
+            ];
+        } else {
+            return [
+                'status' => false,
+                'error' => "Incorrect password!"
+            ];
+        }
+    } else {
+        return [
+            'status' => false,
+            'error' => "Username not found!"
+        ];
     }
-    return false;
 }
 // AUTH

@@ -62,7 +62,6 @@ if (isset($_POST['register'])) {
                 <div class="mb-3">
                     <label for="password" class="form-label">Password</label>
                     <input type="password" class="form-control" id="password" name="password">
-                    <div class="invalid-feedback">Password must be at least 8 characters.</div>
                 </div>
 
                 <button type="submit" class="btn btn-primary w-100" name="register">Register</button>

@@ -95,4 +95,19 @@ function loginUser($username, $password)
         ];
     }
 }
+
+function redirectIfNotLogged(){
+    if(!isset($_SESSION['name'])){
+        header("Location: /../../views/auth/login.php");
+        exit;
+    }
+}
+
+function redirectIfLogged(){
+    if(isset($_SESSION['name'])){
+        header("Location: /../../views/dashboard/");
+        exit;
+    }
+}
+
 // AUTH

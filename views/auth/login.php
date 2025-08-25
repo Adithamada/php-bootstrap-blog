@@ -17,6 +17,7 @@ if (isset($_POST['login'])) {
         $user = loginUser($username, $password);
         if ($user['status']) {
             $_SESSION['name'] = $user['user']['name'];
+            $_SESSION['role'] = $user['user']['role'];
             header("Location: /../views/dashboard/");
             exit;
         } else {

@@ -1,15 +1,16 @@
-<?php 
+<?php
 session_start();
+require_once __DIR__ . '/../../config/db.php'; // memuat BASE_PATH, koneksi DB, dll
+require_once BASE_PATH . '/includes/header.php';
+
+redirectIfNotLogged();
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    Selamat Datang <?= $_SESSION['name'] ?>
-</body>
-</html>
+Selamat Datang <?= $_SESSION['name'] ?>
+<form action="../auth/logout.php" method="post">
+    <button type="submit">Log Out</button>
+</form>
+
+<?php
+require_once BASE_PATH . '/includes/footer.php';
+?>
